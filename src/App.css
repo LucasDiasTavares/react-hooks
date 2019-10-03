@@ -62,7 +62,7 @@ label {
   outline: none;
   height: 3rem;
   width: 100%;
-  font-size: 16px;
+  font-size: 1rem;
   margin: 0 0 8px 0;
   padding: 0;
 }
@@ -73,7 +73,7 @@ label {
   background-color: var(--primaryColor);
   text-align: center;
   letter-spacing: 0.5px;
-  font-size: 14px;
+  font-size: 0.8rem;
   outline: 0;
   border: none;
   border-radius: 2px;

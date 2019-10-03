@@ -1,11 +1,13 @@
 # Learning the basics of React Hooks
 
-In this project I'll do a simple budget calculater, I have already done one using Django(Python), I'll try do the same thing but using React with hooks.
+In this project I'll do a simple budget calculater, I have already done one using Django(Python), I'll try do the same thing but using React with hooks and will be a singlepage application.
+
+Packages:
+
+- [Uuid](https://www.npmjs.com/package/uuid)
+- [React-Icons](https://react-icons.netlify.com/#/)
 
 Deployed in [Netlify](https://www.netlify.com/).
-
-Probably this will be my first app that I'll use in my portifólio.
-
 
 =====================================================================
 
@@ -26,8 +28,3 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
 The page will reload if you make edits.<br>
 You will also see any lint errors in the console.
-
-### Deployment
-
-[Not avaible yet]()
-
