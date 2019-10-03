@@ -18,7 +18,7 @@ const ExpenseForm = ({
             className='form-control'
             id='charge'
             name='charge'
-            placeholder='EX: Pagamento do Carro'
+            placeholder='EX: Carro'
             value={charge}
             onChange={handleCharge}
           />
