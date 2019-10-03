@@ -37,8 +37,18 @@ function App() {
   const [charge, setCharge] = useState('');
   // single amount
   const [amount, setAmount] = useState('');
+  //alert initial false
+  const [alert, setAlert] = useState({ show: false });
+
   // functionality
-  //handle the onchange
+
+  //handle alert
+  const handleAlert = ({ type, text }) => {
+    setAlert({ show: true, type, text });
+    //when time out, back show to false, 7000 is the time in milliseconds
+    setTimeout(() => setAlert({ show: false }), 7000);
+  };
+  //handle the change
   const handleCharge = e => {
     setCharge(e.target.value);
   };
@@ -54,13 +64,18 @@ function App() {
       setExpenses([...expenses, singleExpense]);
       setCharge('');
       setAmount('');
+      handleAlert({ type: 'success', text: 'Item adicionado!' });
     } else {
-      // send a error alert
+      handleAlert({
+        type: 'danger',
+        text: `Nome não pode ser em branco e o valor deve ser maior que zero!`
+      });
     }
   };
 
   return (
     <>
+      {alert.show && <Alert type={alert.type} text={alert.text} />}
       <Alert />
       <h1>Calculadora de Gastos</h1>
       <h1>
