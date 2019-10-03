@@ -39,7 +39,10 @@ function App() {
   const [amount, setAmount] = useState('');
   //alert initial false
   const [alert, setAlert] = useState({ show: false });
-
+  //edit
+  const [edit, setEdit] = useState(false);
+  //edit single item
+  const [id, setId] = useState(0);
   // functionality
 
   //handle alert
@@ -60,11 +63,23 @@ function App() {
   const handleSubmit = e => {
     e.preventDefault();
     if (charge !== '' && amount > 0) {
-      const singleExpense = { id: uuid(), charge, amount };
-      setExpenses([...expenses, singleExpense]);
+      if (edit) {
+        let tempExpenses = expenses.map(item => {
+          //acessing the particular value and override the data
+          return item.id === id ? { ...item, charge, amount } : item;
+        });
+        //saving my new expense using the same if of my old expense
+        setExpenses(tempExpenses);
+        //backing edit to false, because I need the button Salvar
+        setEdit(false);
+        handleAlert({ type: 'success', text: 'Item editado!' });
+      } else {
+        const singleExpense = { id: uuid(), charge, amount };
+        setExpenses([...expenses, singleExpense]);
+        handleAlert({ type: 'success', text: 'Item adicionado!' });
+      }
       setCharge('');
       setAmount('');
-      handleAlert({ type: 'success', text: 'Item adicionado!' });
     } else {
       handleAlert({
         type: 'danger',
@@ -75,7 +90,19 @@ function App() {
 
   //button edit single item
   const handleEdit = id => {
-    //console.log(`item edited : ${id}`);
+    //running throw my array to find a id equals to my
+    let expense = expenses.find(item => item.id === id);
+    //saving the data in my object expense
+    let { charge, amount } = expense;
+    //seting a new charge to this item
+    setCharge(charge);
+    //seting a new amount to this item
+    setAmount(amount);
+    //changing to true, because I wanna
+    //to change my button Salvar to Edit
+    setEdit(true);
+    //seting a new id to this item
+    setId(id);
   };
 
   //button delete single item
@@ -117,6 +144,7 @@ function App() {
           handleAmount={handleAmount}
           handleCharge={handleCharge}
           handleSubmit={handleSubmit}
+          edit={edit}
         />
         <ExpenseList
           expenses={expenses}
