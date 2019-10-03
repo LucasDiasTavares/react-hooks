@@ -2,6 +2,8 @@
 
 In this project I'll do a simple budget calculater, I have already done one using Django(Python), I'll try do the same thing but using React with hooks and will be a singlepage application.
 
+Zero back-end here, only React... but I'm using the basics of local storage, if you reload the page the values probably will still there, but if you are using anonymous mode, the values will disappear.
+
 Packages:
 
 - [Uuid](https://www.npmjs.com/package/uuid)

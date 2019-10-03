@@ -1,34 +1,38 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import uuid from 'uuid/v4';
 import './App.css';
 
 import ExpenseForm from './components/Expense/ExpenseForm';
 import ExpenseList from './components/Expense/ExpenseList';
 import Alert from './components/Expense/Alert';
 
-import uuid from 'uuid/v4';
-//dummy data just for testing
-const initialExpenses = [
-  {
-    id: uuid(),
-    charge: 'rent',
-    amount: 600
-  },
-  {
-    id: uuid(),
-    charge: 'payment',
-    amount: 200
-  },
-  {
-    id: uuid(),
-    charge: 'udemy payment',
-    amount: 100
-  },
-  {
-    id: uuid(),
-    charge: 'credit card',
-    amount: 800
-  }
-];
+const initialExpenses = localStorage.getItem('expenses')
+  ? JSON.parse(localStorage.getItem('expenses'))
+  : [];
+
+//dummy data just for testing if don't wanna use localStorage
+// const initialExpenses = [
+//   {
+//     id: uuid(),
+//     charge: 'rent',
+//     amount: 600
+//   },
+//   {
+//     id: uuid(),
+//     charge: 'payment',
+//     amount: 200
+//   },
+//   {
+//     id: uuid(),
+//     charge: 'udemy payment',
+//     amount: 100
+//   },
+//   {
+//     id: uuid(),
+//     charge: 'credit card',
+//     amount: 800
+//   }
+// ];
 
 function App() {
   // state values for all expenses, add expense
@@ -38,18 +42,35 @@ function App() {
   // single amount
   const [amount, setAmount] = useState('');
   //alert initial false
-  const [alert, setAlert] = useState({ show: false });
+  const [alert, setAlert] = useState({
+    show: false
+  });
   //edit
   const [edit, setEdit] = useState(false);
   //edit single item
   const [id, setId] = useState(0);
+  //useEffect
+  useEffect(() => {
+    console.log('Local Storage Works!!');
+    localStorage.setItem('expenses', JSON.stringify(expenses));
+  }, [expenses]);
   // functionality
 
   //handle alert
   const handleAlert = ({ type, text }) => {
-    setAlert({ show: true, type, text });
+    setAlert({
+      show: true,
+      type,
+      text
+    });
     //when time out, back show to false, 7000 is the time in milliseconds
-    setTimeout(() => setAlert({ show: false }), 7000);
+    setTimeout(
+      () =>
+        setAlert({
+          show: false
+        }),
+      7000
+    );
   };
   //handle the change
   const handleCharge = e => {
@@ -66,17 +87,33 @@ function App() {
       if (edit) {
         let tempExpenses = expenses.map(item => {
           //acessing the particular value and override the data
-          return item.id === id ? { ...item, charge, amount } : item;
+          return item.id === id
+            ? {
+                ...item,
+                charge,
+                amount
+              }
+            : item;
         });
         //saving my new expense using the same if of my old expense
         setExpenses(tempExpenses);
         //backing edit to false, because I need the button Salvar
         setEdit(false);
-        handleAlert({ type: 'success', text: 'Item editado!' });
+        handleAlert({
+          type: 'success',
+          text: 'Item editado!'
+        });
       } else {
-        const singleExpense = { id: uuid(), charge, amount };
+        const singleExpense = {
+          id: uuid(),
+          charge,
+          amount
+        };
         setExpenses([...expenses, singleExpense]);
-        handleAlert({ type: 'success', text: 'Item adicionado!' });
+        handleAlert({
+          type: 'success',
+          text: 'Item adicionado!'
+        });
       }
       setCharge('');
       setAmount('');
@@ -120,16 +157,18 @@ function App() {
   //button clear expenses
   const clearItems = () => {
     setExpenses([]);
-    handleAlert({ type: 'success', text: `Todos os items foram deletados!` });
+    handleAlert({
+      type: 'success',
+      text: `Todos os items foram deletados!`
+    });
   };
 
   return (
     <>
-      {alert.show && <Alert type={alert.type} text={alert.text} />}
-      <Alert />
-      <h1>Calculadora de Gastos</h1>
+      <h1> Calculadora de Gastos </h1>
+
       <h1>
-        Total Gastado:
+        Total:
         <span className='total'>
           R$
           {expenses.reduce((acumulator, current) => {
@@ -137,6 +176,7 @@ function App() {
           }, 0)}
         </span>
       </h1>
+      {alert.show && <Alert type={alert.type} text={alert.text} />}
       <main className='App'>
         <ExpenseForm
           charge={charge}
