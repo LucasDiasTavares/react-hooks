@@ -52,6 +52,8 @@ function App() {
     if (charge !== '' && amount > 0) {
       const singleExpense = { id: uuid(), charge, amount };
       setExpenses([...expenses, singleExpense]);
+      setCharge('');
+      setAmount('');
     } else {
       // send a error alert
     }
