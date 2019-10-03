@@ -40,19 +40,23 @@ function App() {
   // functionality
   //handle the onchange
   const handleCharge = e => {
-    console.log(`charge : ${e.target.value}`);
     setCharge(e.target.value);
   };
   //handle amount
   const handleAmount = e => {
-    console.log(`amount : ${e.target.value}`);
-
     setAmount(e.target.value);
   };
   //handle submit
   const handleSubmit = e => {
     e.preventDefault();
+    if (charge !== '' && amount > 0) {
+      const singleExpense = { id: uuid(), charge, amount };
+      setExpenses([...expenses, singleExpense]);
+    } else {
+      // send a error alert
+    }
   };
+
   return (
     <>
       <Alert />
@@ -62,7 +66,7 @@ function App() {
         <span className='total'>
           R$
           {expenses.reduce((acumulator, current) => {
-            return (acumulator += current.amount);
+            return (acumulator += parseInt(current.amount));
           }, 0)}
         </span>
       </h1>
